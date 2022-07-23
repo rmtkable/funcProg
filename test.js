@@ -32,7 +32,7 @@ const getTea = (numOfCups) => {
 };
 
 // Only change code below this line
-const tea4TeamFCC = null;
+const tea4TeamFCC = getTea(40);
 // Only change code above this line
 
 // 2 Understand Functional Programming Terminology
@@ -76,8 +76,8 @@ const getTea = (prepareTea, numOfCups) => {
 };
 
 // Only change code below this line
-const tea4GreenTeamFCC = null;
-const tea4BlackTeamFCC = null;
+const tea4GreenTeamFCC = getTea(prepareGreenTea, 27);
+const tea4BlackTeamFCC = getTea(prepareBlackTea, 13);
 // Only change code above this line
 
 console.log(
@@ -130,7 +130,7 @@ const Window = function(tabs) {
     // Only change code below this line
   
     const tabsBeforeIndex = this.tabs.splice(0, index); // Get the tabs before the tab
-    const tabsAfterIndex = this.tabs.splice(index + 1); // Get the tabs after the tab
+    const tabsAfterIndex = this.tabs.splice(1); // Get the tabs after the tab
   
     this.tabs = tabsBeforeIndex.concat(tabsAfterIndex); // Join them together
   
@@ -172,7 +172,7 @@ let fixedValue = 4;
 
 function incrementer() {
   // Only change code below this line
-
+  return fixedValue + 1;
 
   // Only change code above this line
 }
@@ -199,8 +199,8 @@ function incrementer() {
 let fixedValue = 4;
 
 // Only change code below this line
-function incrementer() {
-
+function incrementer(value) {
+  return value + 1;
 
   // Only change code above this line
 }
@@ -219,29 +219,37 @@ function incrementer() {
 
 // Note: Both functions should return an array, and any new parameters should be added before the bookName parameter.
 
-// The global variable
-const bookList = ["The Hound of the Baskervilles", "On The Electrodynamics of Moving Bodies", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae"];
+// the global variable
+var bookList = ["The Hound of the Baskervilles", "On The Electrodynamics of Moving Bodies", "Philosophiæ Naturalis Principia Mathematica", "Disquisitiones Arithmeticae"];
 
-// Change code below this line
-function add(bookName) {
+/* This function should add a book to the list and return the list */
+// New parameters should come before bookName
 
-  bookList.push(bookName);
-  return bookList;
-  
-  // Change code above this line
+// Add your code below this line
+function add(arr, bookName) {
+  let newArr = [...arr]; // Copy the bookList array to a new array.
+  newArr.push(bookName); // Add bookName parameter to the end of the new array.
+  return newArr; // Return the new array.
 }
 
-// Change code below this line
-function remove(bookName) {
-  const book_index = bookList.indexOf(bookName);
-  if (book_index >= 0) {
+/* This function should remove a book from the list and return the list */
+// New parameters should come before the bookName one
 
-    bookList.splice(book_index, 1);
-    return bookList;
-
-    // Change code above this line
-    }
+// Add your code below this line
+function remove(arr, bookName) {
+  let newArr = [...arr]; // Copy the bookList array to a new array.
+  if (newArr.indexOf(bookName) >= 0) {
+    // Check whether the bookName parameter is in new array.
+    newArr.splice(newArr.indexOf(bookName), 1); // Remove the given paramater from the new array.
+    return newArr; // Return the new array.
+  }
 }
+
+var newBookList = add(bookList, 'A Brief History of Time');
+var newerBookList = remove(bookList, 'On The Electrodynamics of Moving Bodies');
+var newestBookList = remove(add(bookList, 'A Brief History of Time'), 'On The Electrodynamics of Moving Bodies');
+
+console.log(bookList);
 
 // 7 Use the map Method to Extract Data from an Array
 // So far we have learned to use pure functions to avoid side effects in a program. Also, we have seen the value in having a function only depend on its input arguments.
@@ -386,10 +394,11 @@ const watchList = [
   
   // Only change code below this line
   
-  const ratings = [];
-  for (let i = 0; i < watchList.length; i++) {
-    ratings.push({title: watchList[i]["Title"], rating: watchList[i]["imdbRating"]});
-  }
+  const ratings = watchList.map(item => ({
+    title: item['Title'],
+    rating: item['imdbRating']
+  }));
+  
   
   // Only change code above this line
   
@@ -410,7 +419,9 @@ const s = [23, 65, 98, 5];
 Array.prototype.myMap = function(callback) {
   const newArray = [];
   // Only change code below this line
-
+  for (let i = 0; i < this.length; i++){
+    newArray.push(callback(this[i]));
+  }
   // Only change code above this line
   return newArray;
 };
@@ -558,7 +569,18 @@ const watchList = [
   
   // Only change code below this line
   
-  const filteredList = "";
+  const filteredList = watchList
+  .filter(movie => {
+    // return true it will keep the item
+    // return false it will reject the item
+    return parseFloat(movie.imdbRating) >= 8.0;
+  })
+  .map(movie => {
+    return {
+      title: movie.Title,
+      rating: movie.imdbRating
+    };
+  });
   
   // Only change code above this line
   
@@ -574,7 +596,12 @@ const s = [23, 65, 98, 5];
 
 Array.prototype.myFilter = function(callback) {
   // Only change code below this line
-  const newArray = [];
+  let newArray = [];
+  this.forEach(function(x){
+    if (callback(x) == true){
+      newArray.push(x);
+    }
+  });
   // Only change code above this line
   return newArray;
 };
@@ -597,7 +624,7 @@ const new_s = s.myFilter(function(item) {
 
 function sliceArray(anim, beginSlice, endSlice) {
     // Only change code below this line
-  
+    return anim.slice(beginSlice, endSlice);
   
     // Only change code above this line
   }
@@ -622,7 +649,7 @@ function sliceArray(anim, beginSlice, endSlice) {
 
 function nonMutatingSplice(cities) {
     // Only change code below this line
-    return cities.splice(3);
+    return cities.slice(0, 3);
   
     // Only change code above this line
   }
@@ -642,8 +669,8 @@ function nonMutatingSplice(cities) {
 
 function nonMutatingConcat(original, attach) {
     // Only change code below this line
-  
-  
+    return original.concat(attach);
+
     // Only change code above this line
   }
   
@@ -667,7 +694,7 @@ function nonMutatingConcat(original, attach) {
 
 function nonMutatingPush(original, newItem) {
     // Only change code below this line
-    return original.push(newItem);
+    return original.concat(newItem);
   
     // Only change code above this line
   }
@@ -831,8 +858,19 @@ const watchList = [
   
   function getRating(watchList) {
     // Only change code below this line
-    let averageRating;
-  
+    const averageRating = watchList
+
+    // Use filter to find films directed by Christopher Nolan
+    .filter(film => film.Director === "Christopher Nolan")
+
+    // Use map to convert their ratings from strings to numbers
+    .map(film => Number(film.imdbRating))
+
+    // Use reduce to add together their ratings
+    .reduce((sumOfRatings, rating) => sumOfRatings + rating) /
+
+    // Divide by the number of Nolan films to get the average rating
+    watchList.filter(film => film.Director === "Christopher Nolan").length;
   
     // Only change code above this line
     return averageRating;
@@ -850,7 +888,9 @@ const watchList = [
 
 const squareList = arr => {
     // Only change code below this line
-    return arr;
+    return arr
+              .filter(num => num > 0 && num % parseInt(num) === 0)
+              .map(num => Math.pow(num, 2));;
     // Only change code above this line
   };
   
@@ -887,8 +927,9 @@ const squareList = arr => {
 
 function alphabeticalOrder(arr) {
     // Only change code below this line
-  
-    return arr
+    return arr.sort(function(a,b) {
+      return a === b ? 0 : a < b ? -1 : 1;
+    });
     // Only change code above this line
   }
   
@@ -903,8 +944,9 @@ const globalArray = [5, 6, 3, 2, 9];
 
 function nonMutatingSort(arr) {
   // Only change code below this line
-
-
+  return [].concat(arr).sort(function(a, b) {
+    return a - b;
+  });
   // Only change code above this line
 }
 
@@ -928,8 +970,7 @@ nonMutatingSort(globalArray);
 
 function splitify(str) {
     // Only change code below this line
-  
-  
+    return str.split(/\W/);
     // Only change code above this line
   }
   
@@ -948,8 +989,7 @@ function splitify(str) {
 
 function sentensify(str) {
     // Only change code below this line
-  
-  
+    return str.split(/\W/).join(" ");
     // Only change code above this line
   }
   
@@ -975,8 +1015,11 @@ function sentensify(str) {
 
 // Only change code below this line
 function urlSlug(title) {
-
-
+  return title
+    .toLowerCase()
+    .trim()
+    .split(/\s+/)
+    .join("-");
 }
 // Only change code above this line
 urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone");
@@ -1000,8 +1043,7 @@ urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone");
 
 function checkPositive(arr) {
     // Only change code below this line
-  
-  
+    return arr.every(val => val > 0);  
     // Only change code above this line
   }
   
@@ -1024,7 +1066,7 @@ function checkPositive(arr) {
 function checkPositive(arr) {
     // Only change code below this line
   
-  
+    return arr.some(elem => elem > 0);
     // Only change code above this line
   }
   
@@ -1069,7 +1111,11 @@ function checkPositive(arr) {
 
 function add(x) {
     // Only change code below this line
-  
+    return function(y) {
+      return function(z) {
+        return x + y + z;
+      };
+    };
   
     // Only change code above this line
   }
