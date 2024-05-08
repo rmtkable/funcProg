@@ -32,7 +32,7 @@ const getTea = (numOfCups) => {
 };
 
 // Only change code below this line
-const tea4TeamFCC = null;
+const tea4TeamFCC = getTea(40);
 // Only change code above this line
 
 // 2 Understand Functional Programming Terminology
@@ -76,8 +76,8 @@ const getTea = (prepareTea, numOfCups) => {
 };
 
 // Only change code below this line
-const tea4GreenTeamFCC = null;
-const tea4BlackTeamFCC = null;
+const tea4GreenTeamFCC = getTea(prepareGreenTea, 27);
+const tea4BlackTeamFCC = getTea(prepareBlackTea, 13);
 // Only change code above this line
 
 console.log(
@@ -130,7 +130,7 @@ const Window = function(tabs) {
     // Only change code below this line
   
     const tabsBeforeIndex = this.tabs.splice(0, index); // Get the tabs before the tab
-    const tabsAfterIndex = this.tabs.splice(index + 1); // Get the tabs after the tab
+    const tabsAfterIndex = this.tabs.splice(1); // Get the tabs after the tab
   
     this.tabs = tabsBeforeIndex.concat(tabsAfterIndex); // Join them together
   
@@ -172,7 +172,7 @@ let fixedValue = 4;
 
 function incrementer() {
   // Only change code below this line
-
+  return fixedValue + 1;
 
   // Only change code above this line
 }
@@ -863,20 +863,20 @@ const squareList = arr => {
 
 // For example:
 
-// function ascendingOrder(arr) {
-//   return arr.sort(function(a, b) {
-//     return a - b;
-//   });
-// }
+function ascendingOrder(arr) {
+  return arr.sort(function(a, b) {
+    return a - b;
+  });
+}
 
 // ascendingOrder([1, 5, 2, 3, 4]);
 // This would return the value [1, 2, 3, 4, 5].
 
-// function reverseAlpha(arr) {
-//   return arr.sort(function(a, b) {
-//     return a === b ? 0 : a < b ? 1 : -1;
-//   });
-// }
+function reverseAlpha(arr) {
+  return arr.sort(function(a, b) {
+    return a === b ? 0 : a < b ? 1 : -1;
+  });
+}
 
 // reverseAlpha(['l', 'h', 'z', 'b', 's']);
 // This would return the value ['z', 's', 'l', 'h', 'b'].
@@ -887,8 +887,10 @@ const squareList = arr => {
 
 function alphabeticalOrder(arr) {
     // Only change code below this line
-  
-    return arr
+    return arr.sort(function(a, b){
+      return a === b ? 0 : a < b ? -1 : 1;
+    })
+    
     // Only change code above this line
   }
   
@@ -903,7 +905,9 @@ const globalArray = [5, 6, 3, 2, 9];
 
 function nonMutatingSort(arr) {
   // Only change code below this line
-
+  return [].concat(arr).sort(function(a, b){
+    return a - b;
+  });
 
   // Only change code above this line
 }
@@ -928,7 +932,7 @@ nonMutatingSort(globalArray);
 
 function splitify(str) {
     // Only change code below this line
-  
+    return str.split(/\W/);
   
     // Only change code above this line
   }
@@ -948,7 +952,7 @@ function splitify(str) {
 
 function sentensify(str) {
     // Only change code below this line
-  
+    return str.split(/\W/).join(" ");
   
     // Only change code above this line
   }
@@ -975,8 +979,11 @@ function sentensify(str) {
 
 // Only change code below this line
 function urlSlug(title) {
-
-
+  return title
+    .toLowerCase()
+    .trim()
+    .split(/\s+/)
+    .join("-");
 }
 // Only change code above this line
 urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone");
@@ -988,11 +995,11 @@ urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone");
 
 // For example, the following code would check if every element in the numbers array is less than 10:
 
-// const numbers = [1, 5, 8, 0, 10, 11];
+const numbers = [1, 5, 8, 0, 10, 11];
 
-// numbers.every(function(currentValue) {
-//   return currentValue < 10;
-// });
+numbers.every(function(currentValue) {
+  return currentValue < 10;
+});
 // The every method would return false here.
 
 // Use the every method inside the checkPositive function to check if every element in arr is positive. The function should return a Boolean value.
@@ -1000,7 +1007,7 @@ urlSlug("A Mind Needs Books Like A Sword Needs A Whetstone");
 
 function checkPositive(arr) {
     // Only change code below this line
-  
+    return arr.every(val => val > 0);
   
     // Only change code above this line
   }
@@ -1012,18 +1019,18 @@ function checkPositive(arr) {
 
 // For example, the following code would check if any element in the numbers array is less than 10:
 
-// const numbers = [10, 50, 8, 220, 110, 11];
+const numbers = [10, 50, 8, 220, 110, 11];
 
-// numbers.some(function(currentValue) {
-//   return currentValue < 10;
-// });
+numbers.some(function(currentValue) {
+  return currentValue < 10;
+});
 // The some method would return true.
 
 // Use the some method inside the checkPositive function to check if any element in arr is positive. The function should return a Boolean value.
 
 function checkPositive(arr) {
     // Only change code below this line
-  
+    return arr.some(elem => elem > 0);
   
     // Only change code above this line
   }
@@ -1038,38 +1045,42 @@ function checkPositive(arr) {
 
 // Here's an example:
 
-// function unCurried(x, y) {
-//   return x + y;
-// }
+function unCurried(x, y) {
+  return x + y;
+}
 
-// function curried(x) {
-//   return function(y) {
-//     return x + y;
-//   }
-// }
+function curried(x) {
+  return function(y) {
+    return x + y;
+  }
+}
 
-// const curried = x => y => x + y
+const curried = x => y => x + y
 
-// curried(1)(2)
+curried(1)(2)
 // curried(1)(2) would return 3.
 
 // This is useful in your program if you can't supply all the arguments to a function at one time. You can save each function call into a variable, which will hold the returned function reference that takes the next argument when it's available. Here's an example using the curried function in the example above:
 
-// const funcForY = curried(1);
-// console.log(funcForY(2)); // 3
+const funcForY = curried(1);
+console.log(funcForY(2)); // 3
 // Similarly, partial application can be described as applying a few arguments to a function at a time and returning another function that is applied to more arguments. Here's an example:
 
-// function impartial(x, y, z) {
-//   return x + y + z;
-// }
+function impartial(x, y, z) {
+  return x + y + z;
+}
 
-// const partialFn = impartial.bind(this, 1, 2);
-// partialFn(10); // 13
+const partialFn = impartial.bind(this, 1, 2);
+partialFn(10); // 13
 // Fill in the body of the add function so it uses currying to add parameters x, y, and z.
 
 function add(x) {
     // Only change code below this line
-  
+    return function(y){
+      return function(z){
+        return x + y + z;
+      }
+    }
   
     // Only change code above this line
   }
